@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To do list using html css javascript</title>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Federo&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    body{
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+    .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 30px;
+    width: 400px;
+    margin: auto;
+}
+.list-container{
+    width: 400px;
+    margin: 0 auto;
+}
+input#todo-input {
+    /* width: calc(100% - 80%); */
+    width: 80%;
+    height: 30px;
+    padding: 7px;
+    border-radius: 5px;
+}
+input#todo-input::placeholder {
+    font-size: 16px;
+}
+button#todo-btn {
+    height: 47px;
+    border-radius: 5px;
+    padding: 10px;
+    background: green;
+    color: #fff;
+    border: green;
+    font-size: 15px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    cursor: pointer;
+}
+ul#todo-list {
+    text-align: left;
+    list-style: none;
+    /* position: relative; */
+}
+
+ul#todo-list li:before {
+    width: 8px;
+    height: 8px;
+    background: green;
+    position: absolute;
+    border: 1px solid green;
+    content: " ";
+    left: -8%;
+    top: 55%;
+    transform: translateY(-50%);
+    border-radius: 50px;
+}
+
+ul#todo-list li {
+    position: relative;
+}
+button.complete-btn {
+    position: absolute;
+    right: 24%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: green;
+    color: #fff;
+    border: 3px solid green;
+    border-radius: 3px;
+    font-size: 12px;
+    cursor: pointer;
+}
+button.delete-btn {
+    right: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 3px solid red;
+    background: red;
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 2px;
+}
+li.completed{
+    text-decoration: line-through;
+    color: red;
+}
+</style>
+<body>
+    <div class="container">
+        <h2>To Do List Application</h2>
+        <form action="">
+            <input type="text" name="" id="todo-input" placeholder="Add your task">
+            <button type="submit" id="todo-btn">ADD</button>
+        </form>
+        <div class="list-container">
+            <ul id="todo-list"></ul>
+        </div>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById("todo-input");
+        const todoList = document.getElementById("todo-list");
+         document.getElementById("todo-btn").addEventListener("click", (e)=> {
+            e.preventDefault();
+            const task = todoInput.value.trim();
+            if(task){
+                addTask(task);
+                todoInput.value = '';
+            }
+        })
+
+        todoList.addEventListener("click", (e)=> {
+            if(e.target.tagName === "BUTTON"){
+                const li = e.target.parentElement;
+                if(e.target.classList.contains('delete-btn')){
+                    todoList.removeChild(li);
+                }else if(e.target.classList.contains('complete-btn')){
+                    li.classList.toggle('completed');
+                }
+            }
+        })
+
+        function addTask(task){
+            const li = document.createElement("li");
+            li.innerText = task;
+            todoList.appendChild(li)
+
+            const completeBtn = document.createElement("button");
+            completeBtn.textContent = 'Complete';
+            completeBtn.classList.add('complete-btn')
+            li.appendChild(completeBtn)
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "Delete";
+            deleteBtn.classList.add("delete-btn");
+            li.appendChild(deleteBtn);
+        }
+    </script>
+</body>
+</html>
